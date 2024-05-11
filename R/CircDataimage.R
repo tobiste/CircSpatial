@@ -1,5 +1,4 @@
-`CircDataimage` <-
-function()
+CircDataimage <- function()
 {
 	# 2008-11-12.1919
 
@@ -51,9 +50,9 @@ function()
 	text(x=1.2*cos(angles*pi/180), y=1.2*sin(angles*pi/180), labels=as.character(angles))
 	image(x, y, z= wheel, col= FirstColorVector, add=TRUE)
 	CircDataimageGlobals <<- list()
-###########################################################################################################
-R1.Prime <- function()
-{
+
+
+R1.Prime <- function(){
 	#2007-08-20.1347
 
 	# The following global variables are not dependent on data
@@ -62,7 +61,7 @@ R1.Prime <- function()
 
 	CircDataimageGlobals$ColorGap <<- 0
 	R1.WriteContColorVectors() # Must come after CircDataimageGlobals$ColorGap
-	
+
 	CircDataimageGlobals$ColorVector.g <<- CircDataimageGlobals$GBYR # Must come after R1.WriteContColorVectors
 	CircDataimageGlobals$ColorVector   <<- CircDataimageGlobals$GBYR
 	CircDataimageGlobals$ColorVectorID <<- 1
@@ -75,9 +74,8 @@ R1.Prime <- function()
 	CircDataimageGlobals$Mask <<- NULL
 	CircDataimageGlobals$PlotMask <<- FALSE
 }
-###########################################################################################################
-R1.WriteBinColorVectors <- function()
-{
+
+	R1.WriteBinColorVectors <- function(){
 	# 2007-08-04.1103
 
 	# Each vector has 360 elements for each of 360 degrees
@@ -102,7 +100,7 @@ R1.WriteBinColorVectors <- function()
 	Q18 <- rep(rgb(  0, 102, 153, maxColorValue=255), 18)
 	Q19 <- rep(rgb(  0, 153, 102, maxColorValue=255), 18)
 	Q20 <- rep(rgb(  0, 204,  51, maxColorValue=255), 18)
-	CircDataimageGlobals$Rainbow.20Bin <<- c(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20)	
+	CircDataimageGlobals$Rainbow.20Bin <<- c(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q19, Q20)
 
 	Q1 <-  rep(rgb(  0,   0, 128, maxColorValue=255), 30)
 	Q2 <-  rep(rgb(  0,   0, 192, maxColorValue=255), 30)
@@ -127,7 +125,7 @@ R1.WriteBinColorVectors <- function()
 	Q7 <-  rep(rgb(186, 186, 186, maxColorValue=255), 36)
 	Q8 <-  rep(rgb(135, 135, 135, maxColorValue=255), 36)
 	Q9 <-  rep(rgb( 77,  77,  77, maxColorValue=255), 36)
-	Q10 <- rep(rgb( 64,  13,  28, maxColorValue=255), 36)	
+	Q10 <- rep(rgb( 64,  13,  28, maxColorValue=255), 36)
 	CircDataimageGlobals$Brewer10Div6.10Bin <<- c(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10)
 
 	Q1 <- rep(rgb(255,     255,      0,       maxColorValue=255),23) # yellow
@@ -159,13 +157,13 @@ R1.WriteBinColorVectors <- function()
 	Q6 <-  rep(rgb(255, 165, 0, maxColorValue=255), 60) # orange
 	CircDataimageGlobals$RMBGYO.6Bin <<- c(Q1, Q2, Q3, Q4, Q5, Q6)
 }
-########################################################################################################
-R1.WriteContColorVectors <- function()
-{
+
+
+R1.WriteContColorVectors <- function(){
 	# 2007-09-11.1943
 
 	# Each vector has 360 elements for each of 360 degrees
-	
+
 	gap <- CircDataimageGlobals$ColorGap
 
 	Angles1 <- 0:89
@@ -185,14 +183,14 @@ R1.WriteContColorVectors <- function()
 	CircDataimageGlobals$GBYR <<- c(Q1,Q2,Q3,Q4)
 
 	Q1 <- rgb(Dist1, 255, 0, maxColorValue=255)
-	Q2 <- rgb(255, 255-Dist2, 0, maxColorValue=255)		
+	Q2 <- rgb(255, 255-Dist2, 0, maxColorValue=255)
 	Q3 <- rgb(255-Dist3, 0, Dist3, maxColorValue=255)
 	Q4 <- rgb(0, Dist4, 255-Dist4, maxColorValue=255)
 	CircDataimageGlobals$GYRB <<- c(Q1,Q2,Q3,Q4)
 
 	Q1 <- rgb(Dist1, 255, 0, maxColorValue=255)
 	Q2 <- rgb(255-Dist2, 255-Dist2, Dist2, maxColorValue=255)
-	Q3 <- rgb(Dist3, 0, 255-Dist3, maxColorValue=255)	
+	Q3 <- rgb(Dist3, 0, 255-Dist3, maxColorValue=255)
 	Q4 <- rgb(255-Dist4, Dist4, 0, maxColorValue=255)
 	CircDataimageGlobals$GYBR <<- c(Q1,Q2,Q3,Q4)
 
@@ -277,16 +275,16 @@ R1.WriteContColorVectors <- function()
 	Q3 <- rgb(214+(244-214)*Dist3,  96+(165- 96)*Dist3,   77+(130-77)*Dist3, maxColorValue=255)
 	Q4 <- rgb(244+(253-244)*Dist4, 165+(219-165)*Dist4, 130+(199-130)*Dist4, maxColorValue=255)
 	Q5 <- rgb(253+(224-253)*Dist5, 219+(224-219)*Dist5, 199+(224-199)*Dist5, maxColorValue=255)
-	Q6 <- rgb(224+(186-224)*Dist6, 224+(186-224)*Dist6, 224+(186-224)*Dist6, maxColorValue=255)	
+	Q6 <- rgb(224+(186-224)*Dist6, 224+(186-224)*Dist6, 224+(186-224)*Dist6, maxColorValue=255)
 	Q7 <- rgb(186+(135-186)*Dist7, 186+(135-186)*Dist7, 186+(135-186)*Dist7, maxColorValue=255)
 	Q8 <- rgb(135 +(77-135)*Dist8, 135 +(77-135)*Dist8,  135+(77-135)*Dist8, maxColorValue=255)
 	Q9 <- rgb( 77  +(64-77)*Dist9,  77  +(13-77)*Dist9,   77 +(28-77)*Dist9, maxColorValue=255)
 	Q10 <- rgb(64+(103-64)*Dist10,  13  +(0-13)*Dist10,   28+(31-28)*Dist10, maxColorValue=255)
 	CircDataimageGlobals$Brewer10Div6 <<- c(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10)
 }
-###########################################################################################################
-R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
-{
+
+
+R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2){
 	# 2007-09-12.1930
 
 	# Variable name suffix ".g" indicates variable is global, i.e. at limits of data
@@ -297,7 +295,7 @@ R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
 
 	mask <- as.character(tclvalue(mask.name2))
 	if(mask == "unknown" | mask == "") CircDataimageGlobals$Mask <<- NULL else CircDataimageGlobals$Mask <<- as.matrix(eval(parse(file="", text=mask)))
-	
+
 	CircDataimageGlobals$Data <<- InputData
 	x <- sort(unique(InputData[,1])) # Ascending unique horizontal coordinates of sampling locations.
 	y <- sort(unique(InputData[,2])) # Ascending unique vertical coordinates of sampling locations.
@@ -318,7 +316,7 @@ R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
 	CircDataimageGlobals$ny.g <<- round((CircDataimageGlobals$MaxY.g-CircDataimageGlobals$MinY.g)/CircDataimageGlobals$DY + 1, digits = 0)
 	CircDataimageGlobals$x.g <<- seq(from=CircDataimageGlobals$MinX.g, to=CircDataimageGlobals$MaxX.g,length=CircDataimageGlobals$nx.g)
 	CircDataimageGlobals$y.g <<- seq(from=CircDataimageGlobals$MinY.g, to=CircDataimageGlobals$MaxY.g,length=CircDataimageGlobals$ny.g)
-	
+
 	# for display if Pan() not invoked
 	CircDataimageGlobals$MinX.d <<- CircDataimageGlobals$MinX.g
 	CircDataimageGlobals$MaxX.d <<- CircDataimageGlobals$MaxX.g
@@ -349,7 +347,7 @@ R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
 		Row    <- round((InputData[, 1]- CircDataimageGlobals$MinX.g)/CircDataimageGlobals$DX + 1, digits = 0) # Indexing scalar
 		Column <- round((InputData[, 2]- CircDataimageGlobals$MinY.g)/CircDataimageGlobals$DY + 1, digits = 0) # Indexing scalar
 		for (i in 1:nrow(InputData))
-		{	
+		{
 			u.g[Row[i], Column[i]] <- u.g[Row[i], Column[i]] + InputData[i, 3]
 			v.g[Row[i], Column[i]] <- v.g[Row[i], Column[i]] + InputData[i, 4]
 			N.g[Row[i], Column[i]] <- N.g[Row[i], Column[i]] + 1
@@ -359,12 +357,12 @@ R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
 		filter1 <- N.g > 0
 		u.g[filter1] <- u.g[filter1]/N.g[filter1]
 		v.g[filter1] <- v.g[filter1]/N.g[filter1]
-		# Replace 0’s with NAs where there are no observations
+		# Replace 0?s with NAs where there are no observations
 		u.g[!filter1] <- NA
 		v.g[!filter1] <- NA
 	}
 
-		
+
 	CircDataimageGlobals$u.g <<- u.g # Cell contains average u or NA
 	CircDataimageGlobals$v.g <<- v.g
 	CircDataimageGlobals$Direction.g <<- R1.Standardize(atan2(v.g, u.g)) # atan2(NA,NA)=NA
@@ -375,9 +373,9 @@ R1.Initialize <- function(data.name2, mask.name2, nObs.cb.value2)
 	CircDataimageGlobals$PlotArrows <<- FALSE
 	R1.PlotImage()
 }
-########################################################################################################
-R1.Standardize <- function(Input)
-{
+
+
+R1.Standardize <- function(Input){
 	# 2007-08-05.1218
 
 	# Input and Output in radians
@@ -388,20 +386,20 @@ R1.Standardize <- function(Input)
 	Input[filter] <- temp
 	return(Input)
 }
-###########################################################################################################
-R1.SubsetColorScale <- function(Input)
-{
+
+
+R1.SubsetColorScale <- function(Input){
 	# 2007-08-20.1331
 
 	filter <- !is.na(Input)
 	Range <- floor(range(Input[filter]*180/pi))
 	a <- which((0:359) == Range[1])
 	b <- which((0:359) == Range[2])
-	CircDataimageGlobals$ColorFilter <<- a:b	
+	CircDataimageGlobals$ColorFilter <<- a:b
 }
-###########################################################################################################
-R1.PlotImage <- function()
-{
+
+
+R1.PlotImage <- function(){
 	# 2007-09-14.1720
 
 	# Composite image = data overplotted with arrows overplotted with mask
@@ -411,13 +409,13 @@ R1.PlotImage <- function()
 	      y= CircDataimageGlobals$y.g[CircDataimageGlobals$StartCol:CircDataimageGlobals$EndCol],
 	      z= CircDataimageGlobals$Direction[CircDataimageGlobals$StartRow:CircDataimageGlobals$EndRow, CircDataimageGlobals$StartCol:CircDataimageGlobals$EndCol],
 	      col= CircDataimageGlobals$ColorVector[CircDataimageGlobals$ColorFilter], xlab="X", ylab="Y", asp=1)
-	
+
 	if(CircDataimageGlobals$PlotMask) R1.PlotMask()
-	if(CircDataimageGlobals$PlotArrows) R1.PlotArrows() 
+	if(CircDataimageGlobals$PlotArrows) R1.PlotArrows()
 }
-########################################################################################################
-R1.PlotArrows <- function()
-{
+
+
+R1.PlotArrows <- function(){
 	# 2007-09-20.2244
 
 	x <- CircDataimageGlobals$x.g[CircDataimageGlobals$StartRow:CircDataimageGlobals$EndRow]
@@ -449,9 +447,9 @@ R1.PlotArrows <- function()
 			true.angle = TRUE, arrowfun=arrows, length=.05, angle=15, col=1)
 	} else cat("No arrows can be displayed at current spacing\n")
 }
-###########################################################################################################
-R1.PlotMask <- function()
-{
+
+
+R1.PlotMask <- function(){
 	#2007-08-09.2013
 
 	image(x=CircDataimageGlobals$x.g[CircDataimageGlobals$StartRow:CircDataimageGlobals$EndRow],
@@ -459,16 +457,16 @@ R1.PlotMask <- function()
 	      z=CircDataimageGlobals$Mask[CircDataimageGlobals$StartRow:CircDataimageGlobals$EndRow, CircDataimageGlobals$StartCol:CircDataimageGlobals$EndCol],
 	      col= "tan", add=TRUE)
 }
-########################################################################################################
-R1.PlotWheel <- function()
-{
+
+
+R1.PlotWheel <- function(){
 	dev.set(which=dev.wheel)
 	# The image color vector is not subset based on range of data.
 	image(x=seq(-1,1,length=201), y=seq(-1,1,length=201), z= wheel, col= CircDataimageGlobals$ColorVector, add=TRUE)
 }
-########################################################################################################
-R1.Pan <- function()
-{
+
+
+R1.Pan <- function(){
 	# 2007-09-11.2139
 
 	CircDataimageGlobals$StartRow <<- round((CircDataimageGlobals$MinX.d - CircDataimageGlobals$MinX.g)/CircDataimageGlobals$DX + 1, digits=0)
@@ -479,9 +477,9 @@ R1.Pan <- function()
 	R1.SubsetColorScale(CircDataimageGlobals$Direction[CircDataimageGlobals$StartRow:CircDataimageGlobals$EndRow, CircDataimageGlobals$StartCol:CircDataimageGlobals$EndCol])
 	R1.PlotImage()
 }
-###########################################################################################################
-R1.ChangeColorWheel <- function()
-{
+
+
+R1.ChangeColorWheel <- function(){
 	# 2007-08-20.1903
 
 	ID <- CircDataimageGlobals$ColorVectorID
@@ -503,9 +501,9 @@ R1.ChangeColorWheel <- function()
 	R1.PlotImage()
 	R1.PlotWheel()
 }
-###########################################################################################################
-R1.AutoRotateColorWheel <- function()
-{
+
+
+R1.AutoRotateColorWheel <- function(){
 	# 2007-08-06.1603
 
 	Rotation <- CircDataimageGlobals$ColorRotation
@@ -517,9 +515,9 @@ R1.AutoRotateColorWheel <- function()
 	if(Rotation == 0) {CircDataimageGlobals$ColorVector <<- CircDataimageGlobals$ColorVector.g} else
 	{CircDataimageGlobals$ColorVector <<- c(CircDataimageGlobals$ColorVector.g[-1:Rotation], CircDataimageGlobals$ColorVector.g[1:-Rotation])}
 }
-###########################################################################################################
-R1.RotateColorWheel <- function()
-{
+
+
+R1.RotateColorWheel <- function(){
 	# 2007-08-20.1933
 	# To return to unrotated color wheel, enter zero for rotation.
 
@@ -535,9 +533,9 @@ R1.RotateColorWheel <- function()
 	R1.PlotImage()
 	R1.PlotWheel()
 }
-###########################################################################################################
-R1.ChangeColorGap <- function()
-{
+
+
+R1.ChangeColorGap <- function(){
 	# 2007-08-11.1223
 
 	R1.WriteContColorVectors() # Recompute with gap
@@ -553,9 +551,10 @@ R1.ChangeColorGap <- function()
 	R1.PlotImage()
 	R1.PlotWheel()
 }
-###########################################################################################################
+
+
 R1.Prime()
-   
+
 Top <- tktoplevel()
 tkwm.geometry(Top,"565x600")
 tkwm.title(Top,"Circular Dataimage")
@@ -589,7 +588,7 @@ tkgrid(tklabel(FrameTop, text="Input Dataframe"), data.name.entry, tklabel(Frame
 tklabel(FrameTop,text="Mask Matrix"), mask.name.entry,      tklabel(FrameTop,text="     "),
 tklabel(FrameTop,text="Obs Per Cell > 1"), nObs.cb,         tklabel(FrameTop,text="     "),
 Input.but, sticky="w")
-  
+
 FrameLeft <- tkframe(Top, relief="groove", borderwidth=2)
 tkgrid(tklabel(FrameLeft,text="Continuous Color Scales", font=FontHeading), sticky="e")
 
@@ -732,7 +731,7 @@ Coord.but <- tkbutton(FrameRight,text="OK", command=function(){
 	indexClosest <- which.min(abs(CircDataimageGlobals$x.g - CircDataimageGlobals$MaxX.d)); CircDataimageGlobals$MaxX.d <<- CircDataimageGlobals$x.g[indexClosest]
 	indexClosest <- which.min(abs(CircDataimageGlobals$y.g - CircDataimageGlobals$MinY.d)); CircDataimageGlobals$MinY.d <<- CircDataimageGlobals$y.g[indexClosest]
 	indexClosest <- which.min(abs(CircDataimageGlobals$y.g - CircDataimageGlobals$MaxY.d)); CircDataimageGlobals$MaxY.d <<- CircDataimageGlobals$y.g[indexClosest]
-	
+
 	tclvalue(MinX) <- as.character(CircDataimageGlobals$MinX.d)
 	tclvalue(MaxX) <- as.character(CircDataimageGlobals$MaxX.d)
 	tclvalue(MinY) <- as.character(CircDataimageGlobals$MinY.d)
@@ -745,8 +744,7 @@ tkgrid(tklabel(FrameRight,text="           "))
 tkgrid(tklabel(FrameRight,text="           "))
 
 Smooth <- tclVar("0")
-Smooth.function <- function()
-{
+Smooth.function <- function(){
 	Bandwidth <- as.numeric(tclvalue(Smooth))
 	if(Bandwidth > 0)
 	{
@@ -784,12 +782,12 @@ tkgrid(tklabel(FrameRight,text=" "), sticky="e")
 tkgrid(tklabel(FrameRight,text=" "), sticky="e")
 
 arrow.cb.value <- tclVar("0")
-arrow.cb.function <- function()
-{
+arrow.cb.function <- function(){
 	cbVal <- as.character(tclvalue(arrow.cb.value))
 	if (cbVal=="1") {CircDataimageGlobals$PlotArrows <<- TRUE; R1.PlotImage()}
 	if (cbVal=="0") {CircDataimageGlobals$PlotArrows <<- FALSE; R1.PlotImage()}
 }
+
 arrow.cb <- tkcheckbutton(FrameRight, command=arrow.cb.function)
 tkconfigure(arrow.cb, variable=arrow.cb.value)
 tkgrid(tklabel(FrameRight,text="Arrows", font=FontHeading), sticky="e")
@@ -797,8 +795,8 @@ tkgrid(arrow.cb, row=17, column=1, sticky="w")
 
 arrow.length <- tclVar("1")
 arrow.density <- tclVar("15")
-arrow.function <- function()
-{
+
+arrow.function <- function(){
 	CircDataimageGlobals$ArrowAdj <<- as.numeric(tclvalue(arrow.length))
 	CircDataimageGlobals$cpa <<- as.numeric(tclvalue(arrow.density))
 	R1.PlotImage()
@@ -823,7 +821,7 @@ mask.cb.function <- function()
 }
 mask.cb <- tkcheckbutton(FrameRight, command=mask.cb.function)
 tkconfigure(mask.cb, variable=mask.cb.value)
-	
+
 tkgrid(tklabel(FrameRight,text="Mask", font=FontHeading), sticky="e")
 tkgrid(mask.cb, row=23, column=1, sticky="w")
 tkgrid(tklabel(FrameRight,text="           "))
