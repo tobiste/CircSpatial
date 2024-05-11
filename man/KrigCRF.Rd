@@ -118,7 +118,7 @@ arrow.plot(resids1$x, resids1$y, u=cos(resids1$direction), v=
 KrigCRF(krig.x = x2, krig.y = y2, resid.x= resids1$x, resid.y= resids1$y,
   resid.direction=resids1$direction, Model="exponential", Nugget=0.0,
   Range=4, sill=0.56, Plot=TRUE, Xlim=c(7,10), Ylim=c(7,10), Smooth=TRUE,
-  bandwidth=2)  
+  bandwidth=2)
 
 ## Plot Kriging estimate variability at sample locations on a regular
 ## grid

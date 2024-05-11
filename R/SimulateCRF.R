@@ -151,7 +151,7 @@ SimulateCRF <- function(N=100,
 			CircProb <- rep(-1, n)
 			Kappa=A1inv(Rho) # N. I Fisher, Statistical Analysis of Circular Data, 2000 p. 49
 			# As direction increases from -pi, pvm increases from .5
-			for(i in 1:length(CircScale)) CircProb[i] <- pvm(CircScale[i], mu=0, kappa=Kappa)
+			for(i in 1:length(CircScale)) CircProb[i] <- CircStats::pvm(CircScale[i], mu=0, kappa=Kappa)
 			filter <- CircScale < 0
 			CircProb[filter] <- CircProb[filter] - 0.5
 			CircProb[!filter] <- CircProb[!filter] + 0.5

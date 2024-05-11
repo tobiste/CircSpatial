@@ -1,21 +1,20 @@
-`InterpDirection` <-
-  function(in.x, in.y, in.direction, out.x, out.y) {
-    # 2008-11-11.1444
-    # Interpolate models of direction cosines and sines, separately to avoid cross over.  Fit plane to triangular half of cell
-    # (rectangular element of regular grid of measurement locations) in which interpolation location occurs.
-    # Assumptions - Locations to interpolate are within range of (in.x, in.y), inputs have no missing.
-
-    # Arguments
-    # in.x vector of input horizontal coordinates
-    # in.y vector of input vertical   coordinates
-    # in.direction vector of input direction in radians
-
-    # Value
-    # out.x vector of interpolation output horizontal coordinates
-    # out.y vector of interpolation output vertical   coordinates
-    # out.direction vector of interpolation output direction
-
-    # Verify input
+#' Inrerpolation
+#'
+#' Interpolate models of direction cosines and sines, separately to avoid cross over.  Fit plane to triangular half of cell
+#' (rectangular element of regular grid of measurement locations) in which interpolation location occurs.
+#' Assumptions - Locations to interpolate are within range of (in.x, in.y), inputs have no missing.
+#'
+#' @param in.x vector of input horizontal coordinates
+#' @param in.y vector of input vertical   coordinates
+#' @param in.direction vector of input direction in radians
+#' @param out.x vector of interpolation output horizontal coordinates
+#' @param out.y vector of interpolation output vertical   coordinates
+#'
+#' @returns vector of interpolation output direction
+#' @export
+#'
+#' @examples
+InterpDirection <- function(in.x, in.y, in.direction, out.x, out.y) {
     minx.in <- min(in.x)
     maxx.in <- max(in.x)
     miny.in <- min(in.y)
