@@ -2,7 +2,7 @@
 % Please edit documentation in R/SimulateCRF.R
 \name{SimulateCRF}
 \alias{SimulateCRF}
-\title{Simulate CRF ~ (Range, CircDistr, Rho, mu=0)}
+\title{Simulate a circular random field}
 \usage{
 SimulateCRF(
   N = 100,
@@ -14,7 +14,7 @@ SimulateCRF(
   CovModel = c("circular", "matern", "exponential", "gaussian", "spherical", "cubic",
     "wave", "power", "powered.exponential", "cauchy", "gencauchy", "gneiting",
     "gneiting.matern", "pure.nugget"),
-  xy = NULL,
+  Grid = NULL,
   Anisotropy = NULL,
   OverFit = FALSE,
   Resolution = 0.01
@@ -23,29 +23,40 @@ SimulateCRF(
 \arguments{
 \item{N}{Number of spatial locations to simulate}
 
-\item{CircDistr}{Circular distribution in {U, vM, WrC, Tri, Card},}
+\item{CircDistr}{Circular distribution:
+\describe{
+\item{"U"}{uniform}
+\item{"vM"}{von Mises}
+\item{"WrC"}{wrapped Cauchy distributions}
+\item{"Tri"}{triangular Cauchy distribution}
+\item{"Card}{cardioid Cauchy distributions.}
+}}
 
 \item{Rho}{Mean resultant length parameter
 \describe{
 \item{for triangular}{\verb{0 < Rho <= 4/pi^2}}
 \item{for cardioid}{\verb{0 < Rho <= 0.5}}
 \item{For vM and wrapped Cauchy}{\verb{0 < Rho < 1}, \verb{1 == }degenerate}
-\item{For uniform}{\code{Rho = 0}}
+\item{For uniform}{\code{Rho = 0} (all directions have equal density)}
 }}
 
-\item{Mu}{argaethsdthsth}
+\item{Mu}{Mean resultant direction of circular distribution (rad). \eqn{|\mu| \leq \pi}{mu <= pi}}
 
-\item{Range}{Distance at which CRV independent}
+\item{Range}{Distance at which CRV are not correlated}
 
 \item{Ext}{\code{Range*Ext} is horizontal and vertical length of sample space}
 
-\item{CovModel}{Name of spatial correlation function, see package \code{geoR} Help \code{cov.spatial}}
+\item{CovModel}{Name of spatial correlation function, see \code{\link[geoR:cov.spatial]{geoR::cov.spatial()}}}
 
-\item{xy}{Regular or irregular \verb{N x 2} matrix of simulation locations, overides \code{N} and \code{Ext}}
+\item{Grid}{Regular or irregular \verb{N x 2} matrix of simulation locations,
+overrides \code{N} and \code{Ext}}
 
-\item{Anisotropy}{asrgadh}
+\item{Anisotropy}{Vector of geometric anisotropy (angle, ratio). Angle in
+radians, ratio >= 1. See \code{\link[geoR:grf]{geoR::grf()}}}
 
-\item{Resolution}{drh}
+\item{Resolution}{For nonclosed form inverse CDF, circular quantiles are
+interpolated at resolution Resolution. \verb{0.001 <= Resolution <= 0.01}
+recommended.}
 
 \item{logical.}{\describe{
 \item{\code{TRUE}}{standardization (centering and rescaling realization
@@ -55,39 +66,29 @@ GRVs, biased GRF covariance, and biased testing.
 Standardization is suitable for demonstration with closer fit,
 visualization, and illustrations. Do not standardize for the purposes of
 simulation and testing.}
-item{\code{FALSE}}{non-standardization (default)
+\item{\code{FALSE}}{non-standardization (the default)
 includes expected variation from transformation of variation in mean and
 sd of sample of GRV.
 }
 }}
 }
 \value{
-\describe{
+list with \describe{
 \item{x,y}{Vectors of location coordinates}
 \item{direction}{Vector of directions (in radians)}
-\item{Z}{Vector of simulated observations of the associated GRV}
+\item{Z}{Vector of simulated observations of the GRV of the GRF.}
 }
 }
 \description{
-Simulate CRF ~ (Range, CircDistr, Rho, mu=0)
+Simulate a circular random field
 }
 \examples{
 xy <- expand.grid(1:11, 1:11) # grid
+SimulateCRF(CircDistr = "vM", Rho = sqrt(0.5), Range = 4, Grid = xy, OverFit = TRUE)
 
-model.direction1 <- c(
- 157, 141, 126, 113, 101, 90, 79, 67, 54, 40, 25, 152, 137, 123, 111,
- 100, 90, 80, 69, 57, 44, 30, 147, 133, 120, 109,  99, 90, 81, 71, 60,
- 48, 35, 142, 129, 117, 107,  98, 90, 82, 73, 63, 52, 40, 137, 125, 114,
- 105,  97, 90, 83, 75, 66, 56, 45, 132, 121, 111, 103,  96, 90, 84, 77,
- 69, 60, 50, 127, 117, 108, 101,  95, 90, 85, 79, 72, 64, 55, 122, 113,
- 105,  99,  94, 90, 86, 81, 75, 68, 60, 117, 109, 102,  97,  93, 90, 87,
- 83, 78, 72, 65, 112, 105,  99,  95,  92, 90, 88, 85, 81, 76, 70, 107,
- 101,  96,  93,  91, 90, 89, 87, 84, 80, 75)
- model.direction1 <- (model.direction1)*pi/180
-
- # Compute vM CRF of 121 observations, Rho=sqrt(0.5) so sill about 0.5,
- from GRF (Range=4, spherical covariance).
- set.seed(666)
- crf1 <- SimulateCRF(CircDistr = "vM", Rho = sqrt(0.5), Range = 4, xy = xy, OverFit = TRUE)
- crf1
+SimulateCRF(N = 200, CircDistr = "Card", Rho = 0.4, Range = 5, Ext = 3, CovModel = "exponential")
+SimulateCRF(CircDistr = "U", Range = 8, Ext = 3, CovModel = "gaussian")
+SimulateCRF(CircDistr = "Tri", Rho = 0.5 * 4 / pi^2, Range = 8, Ext = 3, CovModel = "spherical")
+SimulateCRF(CircDistr = "WrC", Rho = sqrt(0.8), Range = 8, Ext = 3, CovModel = "exponential")
+SimulateCRF(N = 400, CircDistr = "WrC", Rho = sqrt(0.95), Range = 8, Ext = 3, CovModel = "spherical", Anisotropy = c(pi / 4, 3))
 }

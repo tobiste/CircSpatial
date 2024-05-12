@@ -1,10 +1,47 @@
-`PlotVectors` <-
-  function(x, y, h, v, UnitVector = TRUE, TriIcon = FALSE, AdjArrowLength = 1, AdjHeadLength = 1, TriIconAdj = 1,
+#' Traditional plots of vector-spatial data.
+#'
+#' @param x,y numeric. coordinates
+#' @param h,v numeric vector of horizontal and vertical component.
+#' Missing values are permitted.
+#' @param UnitVector logical
+#' @param TriIcon logical
+#' @param AdjArrowLength Arrow length multiplier
+#' @param AdjHeadLength Arrow head length multiplier
+#' @param TriIconAdj Multiplies size of icons
+#' @param TriRatio Length to width ratio of triangle icon.
+#' @param JitterPlot logical. If `TRUE`, add jitter to location coordinates
+#' @param Jitter Amount of jitter = Jitter x runif value.
+#' @param ... Additional plot parameters
+#'
+#' @export
+#'
+#' @examples
+#' data(OceanWind)
+#' wind.1997.Jan <- OceanWind[OceanWind$year > 1997 & OceanWind$year < 1997.1, -1]
+#'
+#' ## Direction Only
+#' PlotVectors(
+#'   x = wind.1997.Jan$x, y = wind.1997.Jan$y, h = wind.1997.Jan$u, v = wind.1997.Jan$v,
+#'   UnitVector = TRUE, AdjArrowLength = 0.75, AdjHeadLength = 0.75, xlim = c(320, 350), ylim = c(0, 30)
+#' )
+#'
+#' ## Direction and Magnitude
+#' # fields function arrows omits arrowheads with a warning on
+#' # any arrow of length less than 0.001 inch.
+#' PlotVectors(
+#'   x = wind.1997.Jan$x, y = wind.1997.Jan$y, h = wind.1997.Jan$u, v = wind.1997.Jan$v,
+#'   UnitVector = FALSE, TriIcon = FALSE, AdjArrowLength = 3, AdjHeadLength = 0.4, xlim = c(320, 350),
+#'   ylim = c(0, 30)
+#' )
+#'
+#' ## Triangle Icons
+#' PlotVectors(
+#'   x = wind.1997.Jan$x, y = wind.1997.Jan$y, h = wind.1997.Jan$u, v = wind.1997.Jan$v,
+#'   UnitVector = FALSE, TriIcon = TRUE, TriIconAdj = 0.25, TriRatio = 4, xlim = c(320, 350),
+#'   ylim = c(0, 30)
+#' )
+PlotVectors <- function(x, y, h, v, UnitVector = TRUE, TriIcon = FALSE, AdjArrowLength = 1, AdjHeadLength = 1, TriIconAdj = 1,
            TriRatio = 4, JitterPlot = FALSE, Jitter = 1, ...) {
-    # 2008-11-11.1535
-    # Arrows do not plot where data is missing.
-    # require(fields)
-
     if ((length(x) != length(y)) | (length(h) != length(v)) | (length(x) != length(h))) stop("lengths of vector inputs unequal")
 
     filter <- is.na(h) | is.na(v) | (h == 0 & v == 0)
