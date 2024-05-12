@@ -16,24 +16,41 @@ You can install the development version of `CircSpatial` from
 ``` r
 # install.packages("devtools")
 devtools::install_github("tobiste/CircSpatial")
+#> Downloading GitHub repo tobiste/CircSpatial@HEAD
+#> sp        (2.0-0 -> 2.1-4) [CRAN]
+#> dotCall64 (1.1-0 -> 1.1-1) [CRAN]
+#> maps      (3.4.1 -> 3.4.2) [CRAN]
+#> Installing 3 packages: sp, dotCall64, maps
+#> Installing packages into 'C:/Users/tstephan/AppData/Local/Temp/Rtmpo9FgWs/temp_libpath48a06940517f'
+#> (as 'lib' is unspecified)
+#> package 'sp' successfully unpacked and MD5 sums checked
+#> package 'dotCall64' successfully unpacked and MD5 sums checked
+#> package 'maps' successfully unpacked and MD5 sums checked
+#> 
+#> The downloaded binary packages are in
+#>  C:\Users\tstephan\AppData\Local\Temp\RtmpUvhPDo\downloaded_packages
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#>          checking for file 'C:\Users\tstephan\AppData\Local\Temp\RtmpUvhPDo\remotes17286bb1d4e\tobiste-CircSpatial-e732f5b/DESCRIPTION' ...  ✔  checking for file 'C:\Users\tstephan\AppData\Local\Temp\RtmpUvhPDo\remotes17286bb1d4e\tobiste-CircSpatial-e732f5b/DESCRIPTION'
+#>       ─  preparing 'CircSpatial': (420ms)
+#>    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✔  checking DESCRIPTION meta-information
+#>   Warning:     Warning: bad markup (extra space?) at OceanWind.Rd:9:91
+#>       ─  checking for LF line-endings in source and make files and shell scripts
+#>       ─  checking for empty or unneeded directories
+#>       ─  building 'CircSpatial_1.0.1.9000.tar.gz'
+#>      
+#> 
+#> Installing package into 'C:/Users/tstephan/AppData/Local/Temp/Rtmpo9FgWs/temp_libpath48a06940517f'
+#> (as 'lib' is unspecified)
 ```
 
 ## Example
 
-This is a basic example which shows kriging interpolation:
+This is a basic example which shows kriging interpolation.
 
 ### Simulate a circular random field
 
 ``` r
 library(CircSpatial)
-#> The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
-#> which was just loaded, will retire in October 2023.
-#> Please refer to R-spatial evolution reports for details, especially
-#> https://r-spatial.org/r/2023/05/15/evolution4.html.
-#> It may be desirable to make the sf package available;
-#> package maintainers should consider adding sf to Suggests:.
-#> The sp package is now running under evolution status 2
-#>      (status 2 uses the sf package in place of rgdal)
 
 xy <- expand.grid(1:11, 1:11) # grid
 x1 <- xy[, 1]

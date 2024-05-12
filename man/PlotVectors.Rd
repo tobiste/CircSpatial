@@ -40,7 +40,7 @@ Missing values are permitted.}
 
 \item{JitterPlot}{logical. If \code{TRUE}, add jitter to location coordinates}
 
-\item{Jitter}{Amount of jitter = Jitter x runif value.}
+\item{Jitter}{Amount of jitter = \code{Jitter} * \code{\link[stats:Uniform]{stats::runif()}} value.}
 
 \item{...}{Additional plot parameters}
 }

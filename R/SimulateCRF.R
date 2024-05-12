@@ -24,7 +24,7 @@
 #' overrides `N` and `Ext`
 #' @param Anisotropy Vector of geometric anisotropy (angle, ratio). Angle in
 #' radians, ratio >= 1. See [geoR::grf()]
-#' @param logical. \describe{
+#' @param OverFit logical. \describe{
 #' \item{`TRUE`}{standardization (centering and rescaling realization
 #' of the GRV to `mean = 0` and `sd = 1`) results in closer fit for qualitative evaluation
 #' of the CRV. Undesirable effects are loss of independence of the marginal
@@ -37,7 +37,7 @@
 #' sd of sample of GRV.
 #' }
 #' }
-#' @param Resolution For nonclosed form inverse CDF, circular quantiles are
+#' @param Resolution For non-closed form inverse CDF, circular quantiles are
 #' interpolated at resolution Resolution. `0.001 <= Resolution <= 0.01`
 #' recommended.
 #'
@@ -54,43 +54,36 @@
 #' @examples
 #' xy <- expand.grid(1:11, 1:11) # grid
 #' SimulateCRF(CircDistr = "vM", Rho = sqrt(0.5), Range = 4, Grid = xy, OverFit = TRUE)
-#'
-#' SimulateCRF(N = 200, CircDistr = "Card", Rho = 0.4, Range = 5, Ext = 3, CovModel = "exponential")
-#' SimulateCRF(CircDistr = "U", Range = 8, Ext = 3, CovModel = "gaussian")
-#' SimulateCRF(CircDistr = "Tri", Rho = 0.5 * 4 / pi^2, Range = 8, Ext = 3, CovModel = "spherical")
-#' SimulateCRF(CircDistr = "WrC", Rho = sqrt(0.8), Range = 8, Ext = 3, CovModel = "exponential")
-#' SimulateCRF(N = 400, CircDistr = "WrC", Rho = sqrt(0.95), Range = 8, Ext = 3, CovModel = "spherical", Anisotropy = c(pi / 4, 3))
 SimulateCRF <- function(N = 100,
-                        CircDistr = c("U", "vM", "WrC", "Tri", "Card"),
+                        CircDistr = c("vM", "WrC", "Tri", "Card", "U"),
                         Rho,
                         Mu = 0,
                         Range,
                         Ext = 1,
-                        CovModel = c("circular", "matern", "exponential", "gaussian", "spherical", "cubic", "wave", "power", "powered.exponential", "cauchy", "gencauchy", "gneiting", "gneiting.matern", "pure.nugget"),
+                        CovModel = c("exponential", "matern", "circular", "gaussian", "spherical", "cubic", "wave", "power", "powered.exponential", "cauchy", "gencauchy", "gneiting", "gneiting.matern", "pure.nugget"),
                         Grid = NULL,
                         Anisotropy = NULL,
                         OverFit = FALSE,
                         Resolution = 0.01) {
-
   CircDistr <- match.arg(CircDistr)
   CovModel <- match.arg(CovModel)
 
   if (CircDistr == "U") Rho <- 0
   stopifnot(abs(Mu) <= pi)
-  #if (abs(Mu) > pi) stop("abs(Mu) <= pi")
+  # if (abs(Mu) > pi) stop("abs(Mu) <= pi")
 
   if (!is.null(Grid)) {
     if (!inherits(Grid, "matrix")) Grid <- as.matrix(Grid)
     stopifnot(dim(Grid)[2] == 2)
-    #if (dim(Grid)[2] != 2) stop("Grid not a N x 2 matrix")
+    # if (dim(Grid)[2] != 2) stop("Grid not a N x 2 matrix")
     N <- dim(Grid)[1]
   }
   if (!is.null(Anisotropy)) {
     stopifnot(length(Anisotropy) == 2)
-    #if (length(Anisotropy) != 2) stop("Anisotropy is not a 2 element vector. See geoR Help")
+    # if (length(Anisotropy) != 2) stop("Anisotropy is not a 2 element vector. See geoR Help")
   }
 
-  #if (N <= 0 | Rho < 0 | Range < 0 | Ext <= 0 | Resolution <= 0) stop("Improper numeric input")
+  # if (N <= 0 | Rho < 0 | Range < 0 | Ext <= 0 | Resolution <= 0) stop("Improper numeric input")
   stopifnot(!(N <= 0 | Rho < 0 | Range < 0 | Ext <= 0 | Resolution <= 0))
 
   direction <- vector(mode = "numeric", length = N)
@@ -107,7 +100,7 @@ SimulateCRF <- function(N = 100,
       nugget = 0,
       cov.pars = c(1, Range),
       aniso.pars = Anisotropy,
-      #RF = TRUE,
+      # RF = TRUE,
       messages = FALSE
     )
   } else {
@@ -135,9 +128,8 @@ SimulateCRF <- function(N = 100,
   if (CircDistr == "U") {
     direction <- -pi + 2 * pi * CumProbZ
   } else if (CircDistr == "Tri") {
-
     stopifnot(!(Rho == 0 | Rho > 4 / pi^2))
-    #if (Rho == 0 | Rho > 4 / pi^2) stop("Tri: 0 < Rho <= 4/pi^2")
+    # if (Rho == 0 | Rho > 4 / pi^2) stop("Tri: 0 < Rho <= 4/pi^2")
     filter <- CumProbZ < 0.5
     u1 <- CumProbZ[filter]
     a <- Rho / 8
@@ -158,9 +150,8 @@ SimulateCRF <- function(N = 100,
     # With resolution=.01, circular support from -pi to +pi has 629 elements, delta ~0.01000507, CircScale[315] = 0
     n <- length(CircScale)
     if (CircDistr == "vM") {
-
       stopifnot(!(Rho == 0 | Rho >= 1))
-      #if (Rho == 0 | Rho >= 1) stop("vM: 0 < Rho < 1")
+      # if (Rho == 0 | Rho >= 1) stop("vM: 0 < Rho < 1")
       CircProb <- rep(-1, n)
       Kappa <- CircStats::A1inv(Rho) # N. I Fisher, Statistical Analysis of Circular Data, 2000 p. 49
       # As direction increases from -pi, pvm increases from .5
@@ -170,14 +161,12 @@ SimulateCRF <- function(N = 100,
       CircProb[filter] <- CircProb[filter] - 0.5
       CircProb[!filter] <- CircProb[!filter] + 0.5
     } else if (CircDistr == "Card") {
-
       stopifnot(!(Rho == 0 | Rho > 0.5))
-      #if (Rho == 0 | Rho > 0.5) stop("Cardioid: 0 < Rho <= 0.5")
+      # if (Rho == 0 | Rho > 0.5) stop("Cardioid: 0 < Rho <= 0.5")
       CircProb <- (CircScale + pi + 2 * Rho * sin(CircScale)) / (2 * pi)
     } else if (CircDistr == "WrC") {
-
       stopifnot(!(Rho == 0 | Rho >= 1))
-      #if (Rho == 0 | Rho >= 1) stop("Wrapped Cauchy: 0 < Rho < 1 ")
+      # if (Rho == 0 | Rho >= 1) stop("Wrapped Cauchy: 0 < Rho < 1 ")
       Angles1 <- CircScale[CircScale < 0]
       Angles2 <- CircScale[CircScale >= 0]
       prob1 <- 0.5 - acos(((1 + Rho^2) * cos(Angles1) - 2 * Rho) / (1 + Rho^2 - 2 * Rho * cos(Angles1))) / (2 * pi)

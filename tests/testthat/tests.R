@@ -20,10 +20,12 @@ model.direction1 <- (model.direction1) * pi / 180
 set.seed(666)
 crf1 <- SimulateCRF(CircDistr = "vM", Rho = sqrt(0.5), Range = 4, xy = xy, OverFit = TRUE)
 
-# Make sample
+# Make sample-------------------------------------------------------------------
+
 sample.direction1 <- model.direction1 + crf1$direction
 
-## Fit An Appropriate Model
+## Fit An Appropriate Model-----------------------------------------------------
+
 FitHoriz1 <- lm(cos(sample.direction1) ~ (x1 + y1))
 FitVert1 <- lm(sin(sample.direction1) ~ (x1 + y1))
 fitted.direction1 <- atan2(
@@ -31,13 +33,15 @@ fitted.direction1 <- atan2(
   FitHoriz1$fitted.values
 )
 
-## Compute Residuals
+## Compute Residuals -----------------------------------------------------------
+
 resids1 <- CircResidual(
   X = x1, Y = y1, Raw = sample.direction1,
   Trend = fitted.direction1, Plot = FALSE
 )
 
-## Fit cosine Models
+## Fit cosine Models------------------------------------------------------------
+
 ## Fit of exponential with range=4 and sill=.56 adequate
 CosinePlots(
   x = resids1$x, y = resids1$y, directions = resids1$direction,
@@ -46,10 +50,10 @@ CosinePlots(
   ylim = c(0, 1)
 )
 
-## Krig to residuals using cosine model
-x2 <- seq(3, 6, by = 0.1)
+## Krig to residuals using cosine model-----------------------------------------
+
+x2 <- y2 <- seq(3, 6, by = 0.1)
 n <- length(x2)
-y2 <- x2
 y2 <- rep(y2, n)
 x2 <- rep(x2, each = n)
 rm(n)

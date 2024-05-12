@@ -20,18 +20,33 @@ knitr::opts_chunk$set(
 
 `CircSpatial` provides functions for spatial analysis of circular data.
 
+## Requirements
+
+The package requires the Packages `RandomFields` and `RandomFieldsUtils` which 
+are currently not available through CRAN anymore. Thus, you need to install the 
+last archived versions:
+
+```{r require}
+# install.packages("remotes")
+remotes::install_github("cran/RandomFieldsUtils")
+remotes::install_github("cran/RandomFields")
+```
+
 ## Installation
 
 You can install the development version of `CircSpatial` from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
-devtools::install_github("tobiste/CircSpatial")
+```{r install}
+# remotes::install_github("cran/RandomFieldsUtils")
+# remotes::install_github("cran/RandomFields")
+
+# install.packages("remotes")
+remotes::install_github("tobiste/CircSpatial")
 ```
 
 ## Example
 
-This is a basic example which shows kriging interpolation:
+This is a basic example which shows kriging interpolation.
 
 ### Simulate a circular random field
 
@@ -82,7 +97,7 @@ resids1 <- CircResidual(
 ### Circular kriging
 
 ```{r krige}
-## Kriging locations 
+## Kriging locations
 x2 <- seq(1, 11, by = 0.2)
 y2 <- x2
 
