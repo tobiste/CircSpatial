@@ -1,4 +1,4 @@
-#' Cosine Plot
+#' Cosineogram
 #'
 #' Plot the empirical and fitted cosineograms of the spatial correlation of
 #' circular-spatial data. Assumption: Isotropic circular random field

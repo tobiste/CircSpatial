@@ -6,12 +6,12 @@
 \usage{
 SimulateCRF(
   N = 100,
-  CircDistr = c("U", "vM", "WrC", "Tri", "Card"),
+  CircDistr = c("vM", "WrC", "Tri", "Card", "U"),
   Rho,
   Mu = 0,
   Range,
   Ext = 1,
-  CovModel = c("circular", "matern", "exponential", "gaussian", "spherical", "cubic",
+  CovModel = c("exponential", "matern", "circular", "gaussian", "spherical", "cubic",
     "wave", "power", "powered.exponential", "cauchy", "gencauchy", "gneiting",
     "gneiting.matern", "pure.nugget"),
   Grid = NULL,
@@ -54,11 +54,7 @@ overrides \code{N} and \code{Ext}}
 \item{Anisotropy}{Vector of geometric anisotropy (angle, ratio). Angle in
 radians, ratio >= 1. See \code{\link[geoR:grf]{geoR::grf()}}}
 
-\item{Resolution}{For nonclosed form inverse CDF, circular quantiles are
-interpolated at resolution Resolution. \verb{0.001 <= Resolution <= 0.01}
-recommended.}
-
-\item{logical.}{\describe{
+\item{OverFit}{logical. \describe{
 \item{\code{TRUE}}{standardization (centering and rescaling realization
 of the GRV to \code{mean = 0} and \code{sd = 1}) results in closer fit for qualitative evaluation
 of the CRV. Undesirable effects are loss of independence of the marginal
@@ -71,6 +67,10 @@ includes expected variation from transformation of variation in mean and
 sd of sample of GRV.
 }
 }}
+
+\item{Resolution}{For non-closed form inverse CDF, circular quantiles are
+interpolated at resolution Resolution. \verb{0.001 <= Resolution <= 0.01}
+recommended.}
 }
 \value{
 list with \describe{

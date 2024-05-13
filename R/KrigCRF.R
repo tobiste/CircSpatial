@@ -121,8 +121,7 @@ KrigCRF <- function(krig.x, krig.y, resid.x, resid.y, resid.direction, Model = R
   # V <- t(U) %*% U
 
   n <- length(krig.x) # krig.x=krig.y for square or rect grid
-  krig.direction <- vector(mode = "numeric", length = n)
-  krig.variance <- krig.direction
+  krig.direction <- krig.variance <- vector(mode = "numeric", length = n)
 
   for (i in 1:n)
   {
