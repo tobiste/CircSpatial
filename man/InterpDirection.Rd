@@ -75,7 +75,7 @@ x2 <- rep(x2, each = n)
 rm(n)
 krig2 <- KrigCRF(
   krig.x = x2, krig.y = y2, resid.x = resids1$x, resid.y = resids1$y, resid.direction =
-    resids1$direction, Model = RandomFields::RMexp(), Nugget = 0.0, Range = 4, sill = 0.56, Plot = FALSE
+    resids1$direction, Model = RandomFields::RMexp(), Nugget = 0.0, Range = 4, Sill = 0.56, Plot = FALSE
 )
 
 ## Interpolate Fitted Model

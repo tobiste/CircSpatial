@@ -10,7 +10,7 @@ KrigCRF(
   resid.x,
   resid.y,
   resid.direction,
-  Model = RandomFields::RMexp(),
+  Model = RandomFields::RMexp(var = 1, scale = 1),
   Nugget = 0,
   Range,
   sill,
@@ -55,6 +55,8 @@ See \code{\link[RandomFields:RFcov]{RandomFields::RFcov()}} for more details.}
 \item{PlotVar}{logical. Plot circular kriging variance.}
 
 \item{...}{optional params to \code{\link[RandomFields:RFcov]{RandomFields::RFcov()}}}
+
+\item{params}{\code{list} that specifies free parameters in a formula description, see \code{\link[RandomFields:RFformula]{RandomFields::RMformula()}}}
 }
 \description{
 Krige and smooth the circular-spatial residuals.
@@ -98,9 +100,12 @@ resids1 <- CircResidual(
 
 x2 <- seq(1, 11, by = 0.2)
 y2 <- x2 ## Kriging locations
+
+m <- RandomFields::RMexp(var = 1, scale = 1)
+
 krig2 <- KrigCRF(
   krig.x = x2, krig.y = y2, resid.x = resids1$x, resid.y = resids1$y,
-  resid.direction = resids1$direction, Model = RandomFields::RMexp(), Nugget = 0.0, Range = 4, sill = 0.56,
+  resid.direction = resids1$direction, Model =m, Nugget = 0.0, Range = 4, sill = 0.56,
   Plot = FALSE
 )
 }

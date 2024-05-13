@@ -15,6 +15,7 @@
 #' @param Nugget nugget component of the variogram (this basically adds a nugget component to the model); if missing, nugget component is omitted
 #' @param Range range parameter of the variogram model component; in case of anisotropy: major range
 #' @param sill sill of the variogram model component, or model: Mean cosine at the Range.
+#' @param params `list` that specifies free parameters in a formula description, see [RandomFields::RMformula()]
 #' @param Smooth logical.
 #' @param bandwidth Kernel smoothing bandwidth (>0)
 #' @param Plot logical
@@ -66,12 +67,16 @@
 #'
 #' x2 <- seq(1, 11, by = 0.2)
 #' y2 <- x2 ## Kriging locations
+#'
+#' m <- RandomFields::RMexp(var = 1, scale = 1)
+#'
 #' krig2 <- KrigCRF(
 #'   krig.x = x2, krig.y = y2, resid.x = resids1$x, resid.y = resids1$y,
-#'   resid.direction = resids1$direction, Model = RandomFields::RMexp(), Nugget = 0.0, Range = 4, sill = 0.56,
+#'   resid.direction = resids1$direction, Model =m, Nugget = 0.0, Range = 4, sill = 0.56,
 #'   Plot = FALSE
 #' )
-KrigCRF <- function(krig.x, krig.y, resid.x, resid.y, resid.direction, Model = RandomFields::RMexp(), Nugget = 0, Range, sill,
+KrigCRF <- function(krig.x, krig.y, resid.x, resid.y, resid.direction, Model = RandomFields::RMexp(var = 1, scale = 1), Nugget = 0, Range, sill,
+                    #params = list(M = 0,var = 1,nugg = 0,scale = 1),
                     Smooth = FALSE, bandwidth, Plot = FALSE, Xlim = NULL, Ylim = NULL, PlotVar = FALSE, ...) {
   # 2008-11-11.1213
   # select model from covariance models in R package Random Fields function CovarianceFct ## ??RFcov
@@ -104,14 +109,8 @@ KrigCRF <- function(krig.x, krig.y, resid.x, resid.y, resid.direction, Model = R
     # ))
     K <- cbind(K, sill + (1 - Nugget - sill) * RandomFields::RFcov(
       x = Distances[, i] / Range, model = Model,
-      params = list(
-        M = 0,
-        var = 1,
-        nugg = 0,
-        scale = 1,
-        # dim = 1,
-        ...
-      ) # ,dim = 1
+      #params = params,
+      dim = 1
     ))
   }
   diag(K) <- 1 # TRUE even if nugget > 0 for any model
@@ -134,9 +133,10 @@ KrigCRF <- function(krig.x, krig.y, resid.x, resid.y, resid.direction, Model = R
     #   x = distances / Range, model = Model,
     #   param = c(mean = 0, variance = 1, nugget = 0, scale = 1, ...), dim = 1, fctcall = "Cov"
     # )
-    c <- sill + (1 - Nugget - sill) * RFcov(
+    c <- sill + (1 - Nugget - sill) * RandomFields::RFcov(
       x = distances / Range, model = Model,
-      params = list(mean = 0, variance = 1, nugget = 0, scale = 1, ...), vdim = 1
+      #params = params,
+      dim = 1
     )
 
     c[distances == 0] <- 1 # TRUE even if nugget > 0 for any model

@@ -2,7 +2,7 @@
 % Please edit documentation in R/CosinePlots.R
 \name{CosinePlots}
 \alias{CosinePlots}
-\title{Cosine Plot}
+\title{Cosineogram}
 \usage{
 CosinePlots(
   x,
