@@ -35,7 +35,7 @@ e.g. \code{\link[RandomFields:RMcauchy]{RandomFields::RMcauchy()}}, \code{\link[
 \code{\link[RandomFields:RMgencauchy]{RandomFields::RMgencauchy()}}, \code{\link[RandomFields:RMgauss]{RandomFields::RMgauss()}},
 \code{\link[RandomFields:RMgneiting]{RandomFields::RMgneiting()}},\code{\link[RandomFields:RMmatern]{RandomFields::RMmatern()}},
 \code{\link[RandomFields:RMnugget]{RandomFields::RMnugget()}}, \code{\link[RandomFields:RMspheric]{RandomFields::RMspheric()}},
-\code{\link[RandomFields:RMstable]{RandomFields::RMstable()}}, \code{\link[RandomFields:RMmatern]{RandomFields::RMwhittle()}}).
+\code{\link[RandomFields:RMstable]{RandomFields::RMstable()}}, \code{\link[RandomFields:RMwhittle]{RandomFields::RMwhittle()}}).
 See \code{\link[RandomFields:RFcov]{RandomFields::RFcov()}} for more details.}
 
 \item{Nugget}{nugget component of the variogram (this basically adds a nugget component to the model); if missing, nugget component is omitted}
@@ -56,7 +56,7 @@ See \code{\link[RandomFields:RFcov]{RandomFields::RFcov()}} for more details.}
 
 \item{...}{optional params to \code{\link[RandomFields:RFcov]{RandomFields::RFcov()}}}
 
-\item{params}{\code{list} that specifies free parameters in a formula description, see \code{\link[RandomFields:RFformula]{RandomFields::RMformula()}}}
+\item{params}{\code{list} that specifies free parameters in a formula description, see \code{\link[RandomFields:RMformula]{RandomFields::RMformula()}}}
 }
 \description{
 Krige and smooth the circular-spatial residuals.
